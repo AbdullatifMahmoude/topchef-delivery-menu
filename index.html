@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>توب شيف كابتن | تطبيق التوصيل والعهدة</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700;800;900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Floating Live Demo Switcher -->
+  <aside class="demo-live-switcher" aria-label="تبديل معاينة التصاميم">
+    <a href="./" class="demo-switch-link active">
+      <span class="material-symbols-outlined">two_wheeler</span>
+      <span>تطبيق الدليفري</span>
+    </a>
+    <a href="./menu/" class="demo-switch-link">
+      <span class="material-symbols-outlined">restaurant_menu</span>
+      <span>منيو الزبائن</span>
+    </a>
+  </aside>
+
+  <div class="app-container">
+    <div class="mobile-frame">
+      <div class="device-notch"></div>
+
+      <!-- Minimalist Adaptive Splash / Launch Screen (Adapts to Light / Dark Theme) -->
+      <div class="app-splash-screen" id="appSplashScreen">
+        <div class="splash-logo-container">
+          <img class="splash-logo-img" src="assets/logo.png" alt="شعار مطعم توب شيف">
+        </div>
+
+        <h1 class="splash-title">توب شيف كابتن</h1>
+        <p class="splash-subtitle">طازة من الفحم • تطبيق التوصيل وإدارة العهدة</p>
+
+        <!-- Clean native-style spinner & status -->
+        <div class="splash-loader-wrapper">
+          <div class="splash-spinner"></div>
+          <div class="splash-status-text" id="splashStatusText">جاري الاتصال بالنظام...</div>
+          <div class="splash-progress-track">
+            <div class="splash-progress-fill" id="splashProgressBar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- App Header -->
+      <header class="app-header">
+        <div class="header-right">
+          <div class="avatar-wrapper" onclick="navigateTo('profile')" style="cursor: pointer;">
+            <img class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="كابتن أحمد">
+            <span class="status-dot" id="statusDot"></span>
+          </div>
+          <div class="captain-info-col">
+            <div class="captain-name">كابتن أحمد</div>
+            <div class="captain-status-row">
+              <span class="status-indicator-dot" id="statusPillDot"></span>
+              <span class="captain-status-label" id="captainStatusLabel">متصل وجاهز</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-left">
+          <!-- Theme Toggle (Dark / Light Mode) -->
+          <button class="icon-btn-header" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل الوضع الليلي / الفاتح" aria-label="الوضع الليلي">
+            <span class="material-symbols-outlined text-[18px]" id="themeToggleIcon">dark_mode</span>
+          </button>
+
+          <!-- Quick sync button to test skeleton loading anytime -->
+          <button class="icon-btn-header" onclick="simulateLoading()" title="مزامنة وتحديث البيانات" aria-label="تحديث">
+            <span class="material-symbols-outlined text-[18px]">sync</span>
+          </button>
+
+          <button class="break-toggle-btn" id="breakToggleBtn">
+            <span class="material-symbols-outlined text-[15px]">bedtime</span>
+            <span>استراحة</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Scrollable Screen Content -->
+      <div class="screen-content">
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: HOME (الرئيسية)                    -->
+        <!-- ========================================== -->
+        <section class="app-view active" id="view-home">
+          
+          <!-- SKELETON LOADING PLACEHOLDER (Hidden by default, triggered on sync) -->
+          <div class="data-skeleton-content" style="display: none;">
+            <div class="card" style="padding: 22px; margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 14px;">
+                <div class="skeleton" style="width: 90px; height: 24px; border-radius: 99px;"></div>
+                <div class="skeleton" style="width: 110px; height: 20px;"></div>
+              </div>
+              <div class="skeleton skeleton-title"></div>
+              <div class="skeleton skeleton-text" style="width: 75%;"></div>
+              <div class="skeleton skeleton-text" style="width: 50%;"></div>
+              <div class="skeleton" style="height: 52px; border-radius: 14px; margin: 16px 0 12px 0;"></div>
+              <div class="skeleton skeleton-btn"></div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="skeleton" style="height: 74px; border-radius: 16px;"></div>
+              <div class="skeleton" style="height: 74px; border-radius: 16px;"></div>
+            </div>
+          </div>
+
+          <!-- LOADED ACTUAL CONTENT -->
+          <div class="data-loaded-content">
+            <!-- Active Delivery Hero Card -->
+            <div class="delivery-hero-card">
+              <div class="card-top-bar">
+                <div class="stop-pill">
+                  <span class="dot"></span>
+                  <span>المحطة ٢ من ٣</span>
+                </div>
+                <div class="distance-tag">
+                  <span class="material-symbols-outlined text-[16px]">near_me</span>
+                  <span>٨٥٠ متر • ١٤ دقيقة</span>
+                </div>
+              </div>
+
+              <div class="destination-info">
+                <span class="dest-subtitle">الوجهة الحالية النشطة</span>
+                <h1 class="dest-title">حي الجامعة — عمارة السعادة</h1>
+                <p class="dest-details">الدور الرابع • شقة ٨</p>
+              </div>
+
+              <div class="customer-strip">
+                <div class="customer-details">
+                  <div class="customer-avatar">
+                    <span class="material-symbols-outlined text-[20px]">person</span>
+                  </div>
+                  <div>
+                    <div class="customer-name">م. كريم عبد العزيز</div>
+                    <div class="customer-role">العميل</div>
+                  </div>
+                </div>
+
+                <a href="tel:01012345678" class="call-btn">
+                  <span class="material-symbols-outlined text-[16px]">call</span>
+                  <span>اتصال</span>
+                </a>
+              </div>
+
+              <!-- Cash Amount Strip -->
+              <div class="cash-strip">
+                <div class="cash-strip-label">
+                  <span class="material-symbols-outlined text-[20px]" style="color: var(--price-gold);">payments</span>
+                  <span>المطلوب كاش عند التسليم</span>
+                </div>
+                <div class="cash-strip-amount">
+                  <span class="cash-strip-val">٣٥٠</span>
+                  <span class="cash-strip-currency">ج.م</span>
+                </div>
+              </div>
+
+              <!-- Primary Action Button -->
+              <div class="btn-center-wrapper">
+                <button class="btn-primary" id="openTripDetailsBtn">
+                  <span class="material-symbols-outlined">navigation</span>
+                  <span>فتح الملاحة والمسار</span>
+                </button>
+              </div>
+
+              <!-- Secondary Link -->
+              <div style="text-align: center; margin-top: 8px;">
+                <button class="card-link-btn" onclick="navigateTo('details')">
+                  <span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                  <span>عرض أصناف الطلب وتأكيد التسليم</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+              <div class="stat-tile" onclick="navigateTo('history')" title="عرض سجل الطلبات">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <span class="material-symbols-outlined text-[20px]" style="color: var(--primary);">receipt_long</span>
+                  <span class="stat-desc">سجل اليوم</span>
+                </div>
+                <span class="stat-val" id="statCompletedOrders">٨ طلبات</span>
+                <span style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">مكتملة ومسلمة</span>
+              </div>
+
+              <div class="stat-tile" onclick="navigateTo('finances')" title="إدارة العهدة والماليات">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <span class="material-symbols-outlined text-[20px]" style="color: var(--price-gold);">payments</span>
+                  <span class="stat-desc">إدارة العهدة</span>
+                </div>
+                <span class="stat-val" id="statCashCustody">١,٤٥٠ ج.م</span>
+                <span style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">كاش بعهدتك</span>
+              </div>
+            </div>
+
+            <!-- Support Row -->
+            <div class="support-link-wrapper">
+              <button class="support-link" onclick="showToast('رقم إدارة الفرع المباشر: 0100998877', 'normal')">
+                <span class="material-symbols-outlined text-[16px]">support_agent</span>
+                <span>اتصال بإدارة فرع الزقازيق • 0100998877</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: TRIP & ROUTE (الرحلة)               -->
+        <!-- ========================================== -->
+        <section class="app-view" id="view-trip">
+          <div class="view-sub-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button class="back-btn" onclick="navigateTo('home')" title="الرجوع للرئيسية">
+                <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+              </button>
+              <div class="view-sub-title">مسار الرحلة والملاحة</div>
+            </div>
+            <div class="order-tag">المحطة ٢ من ٣</div>
+          </div>
+
+          <!-- Rich Interactive Motorcycle Tracking Map -->
+          <div class="map-box">
+            <!-- Top Map Header Controls Overlay -->
+            <div class="map-hud-top">
+              <div class="map-traffic-badge">
+                <span class="traffic-dot"></span>
+                <span>حركة المرور سالكة • طريق سريع</span>
+              </div>
+              <div class="map-speed-badge">
+                <span class="material-symbols-outlined text-[15px]">speed</span>
+                <span>٣٢ كم/س</span>
+              </div>
+            </div>
+
+            <!-- Compass Widget -->
+            <div class="map-compass" title="شمال جغرافي">
+              <span class="compass-needle"></span>
+              <span class="compass-label">ش</span>
+            </div>
+
+            <svg viewBox="0 0 420 280" fill="none" xmlns="http://www.w3.org/2000/svg" class="map-svg-canvas">
+              <defs>
+                <!-- Glow Filters -->
+                <filter id="routeGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+                <filter id="bikeGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(214,35,39,0.5)" />
+                </filter>
+                <filter id="pinShadow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="rgba(0,0,0,0.4)" />
+                </filter>
+
+                <!-- Linear Gradients -->
+                <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#152e42" />
+                  <stop offset="50%" stop-color="#1c3e59" />
+                  <stop offset="100%" stop-color="#152e42" />
+                </linearGradient>
+
+                <linearGradient id="headlightGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+                  <stop offset="0%" stop-color="rgba(255, 220, 120, 0.65)" />
+                  <stop offset="100%" stop-color="rgba(255, 220, 120, 0)" />
+                </linearGradient>
+
+                <linearGradient id="pinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffc107" />
+                  <stop offset="100%" stop-color="#e65100" />
+                </linearGradient>
+              </defs>
+
+              <!-- Map Background Canvas -->
+              <rect width="420" height="280" fill="#181c24" />
+
+              <!-- Urban District Blocks -->
+              <!-- Block 1: Residential North -->
+              <rect x="15" y="15" width="100" height="70" rx="8" fill="#202531" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
+              <!-- Block 2: University Campus & Green Park -->
+              <rect x="135" y="15" width="150" height="70" rx="8" fill="#1a2d24" stroke="rgba(46,125,50,0.15)" stroke-width="1" />
+              <circle cx="155" cy="40" r="7" fill="#264d36" opacity="0.8" />
+              <circle cx="175" cy="32" r="9" fill="#2d5c40" opacity="0.9" />
+              <circle cx="195" cy="45" r="6" fill="#264d36" opacity="0.8" />
+              <circle cx="220" cy="35" r="8" fill="#2d5c40" opacity="0.9" />
+              <circle cx="250" cy="42" r="7" fill="#264d36" opacity="0.8" />
+              <text x="210" y="65" font-family="'Readex Pro', sans-serif" font-size="9" fill="#4ade80" font-weight="600" text-anchor="middle" opacity="0.85">حديقة الحرم الجامعي</text>
+
+              <!-- Block 3: East Commercial Zone -->
+              <rect x="305" y="15" width="100" height="110" rx="8" fill="#222735" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
+              <text x="355" y="45" font-family="'Readex Pro', sans-serif" font-size="9" fill="#64748b" font-weight="600" text-anchor="middle">منطقة المولات</text>
+
+              <!-- Block 4: Southwest Residential Zone -->
+              <rect x="15" y="105" width="80" height="90" rx="8" fill="#202531" />
+
+              <!-- Block 5: Center-South Blocks -->
+              <rect x="115" y="180" width="110" height="85" rx="8" fill="#202531" />
+              <rect x="245" y="165" width="80" height="100" rx="8" fill="#202531" />
+
+              <!-- Waterway: Bahr Moyes Canal with curves -->
+              <path d="M -10,240 C 90,230 180,265 290,250 C 350,240 390,255 430,245 L 430,290 L -10,290 Z" fill="url(#waterGrad)" />
+              <path d="M -10,240 C 90,230 180,265 290,250 C 350,240 390,255 430,245" stroke="#25557a" stroke-width="2" fill="none" opacity="0.4" />
+              <text x="200" y="272" font-family="'Readex Pro', sans-serif" font-size="9" fill="#38bdf8" font-weight="600" opacity="0.6">ترعة بحر مويس</text>
+
+              <!-- Secondary Roads Network -->
+              <path d="M 125, -10 L 125, 290" stroke="#282f3d" stroke-width="12" stroke-linecap="round" />
+              <path d="M 295, -10 L 295, 290" stroke="#282f3d" stroke-width="12" stroke-linecap="round" />
+              <path d="M -10, 95 L 430, 95" stroke="#282f3d" stroke-width="12" stroke-linecap="round" />
+
+              <!-- Bridges over Canal -->
+              <rect x="117" y="235" width="16" height="30" fill="#353e4f" rx="2" />
+              <rect x="287" y="240" width="16" height="30" fill="#353e4f" rx="2" />
+
+              <!-- Arterial Main Highway -->
+              <path d="M -10, 185 Q 120, 180 180, 145 T 350, 75 L 430, 75" stroke="#333c4d" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M -10, 185 Q 120, 180 180, 145 T 350, 75 L 430, 75" stroke="#252b37" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M -10, 185 Q 120, 180 180, 145 T 350, 75 L 430, 75" stroke="rgba(255,255,255,0.22)" stroke-width="2" stroke-dasharray="6 8" stroke-linecap="round" />
+
+              <!-- Street Name Labels on map -->
+              <text x="60" y="172" font-family="'Readex Pro', sans-serif" font-size="8.5" fill="#94a3b8" font-weight="600" transform="rotate(-3, 60, 172)">طريق المشاية السفلية</text>
+              <text x="270" y="88" font-family="'Readex Pro', sans-serif" font-size="8.5" fill="#94a3b8" font-weight="600">شارع الجامعة الرئيسي</text>
+              <text x="135" y="130" font-family="'Readex Pro', sans-serif" font-size="8" fill="#64748b" font-weight="600" transform="rotate(90, 135, 130)">شارع السلام</text>
+
+              <!-- The Delivery Route -->
+              <path d="M 50, 185 Q 120, 180 175, 148" stroke="#475569" stroke-width="5" stroke-linecap="round" opacity="0.7" />
+              <path d="M 175, 148 Q 230, 115 345, 75" stroke="rgba(214, 35, 39, 0.3)" stroke-width="16" stroke-linecap="round" filter="url(#routeGlow)" />
+              <path d="M 175, 148 Q 230, 115 345, 75" stroke="#d62327" stroke-width="5" stroke-linecap="round" />
+              <path class="route-animated-flow" d="M 175, 148 Q 230, 115 345, 75" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="8 12" stroke-linecap="round" />
+
+              <!-- Origin Pin: Top Chef Restaurant -->
+              <g transform="translate(50, 185)" filter="url(#pinShadow)">
+                <circle cx="0" cy="0" r="14" fill="#ffffff" />
+                <circle cx="0" cy="0" r="11" fill="#d62327" />
+                <path d="M -4,-2 C -4,-5 -1,-6 0,-6 C 1,-6 4,-5 4,-2 C 6,-2 6,2 4,2 L -4,2 C -6,2 -6,-2 -4,-2 Z" fill="#ffffff" />
+                <rect x="-4" y="3" width="8" height="2" fill="#ffffff" rx="1" />
+                <rect x="-45" y="16" width="90" height="18" rx="5" fill="rgba(20,23,30,0.9)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+                <text x="0" y="29" font-family="'Readex Pro', sans-serif" font-size="8" fill="#ffffff" font-weight="700" text-anchor="middle">توب شيف • الفرع</text>
+              </g>
+
+              <!-- Destination Pin: Customer -->
+              <g transform="translate(345, 75)" filter="url(#pinShadow)">
+                <circle class="destination-pulse" cx="0" cy="0" r="18" fill="none" stroke="#ffb800" stroke-width="2" opacity="0.6" />
+                <circle class="destination-pulse-inner" cx="0" cy="0" r="10" fill="rgba(255, 184, 0, 0.2)" />
+                <path d="M 0,0 C -9,-9 -9,-20 0,-20 C 9,-20 9,-9 0,0 Z" fill="url(#pinGrad)" stroke="#ffffff" stroke-width="1.5" />
+                <circle cx="0" cy="-14" r="3.5" fill="#ffffff" />
+                <rect x="-55" y="-42" width="110" height="19" rx="6" fill="#1e232d" stroke="#ffb800" stroke-width="1.2" />
+                <text x="0" y="-29" font-family="'Readex Pro', sans-serif" font-size="8.5" fill="#f8fafc" font-weight="700" text-anchor="middle">العميل • حي الجامعة</text>
+              </g>
+
+              <!-- Active Motorcycle & Captain Live Tracker -->
+              <g transform="translate(175, 148)">
+                <!-- Rotating Radar Pulse Concentric Waves -->
+                <circle class="radar-wave wave-1" cx="0" cy="0" r="12" fill="none" stroke="#d62327" stroke-width="2" />
+                <circle class="radar-wave wave-2" cx="0" cy="0" r="18" fill="none" stroke="#d62327" stroke-width="1.5" />
+                <circle class="radar-wave wave-3" cx="0" cy="0" r="26" fill="rgba(214,35,39,0.15)" />
+
+                <!-- Headlight Projection Beam -->
+                <g transform="rotate(-30)">
+                  <polygon points="10,-6 65,-24 65,24 10,6" fill="url(#headlightGrad)" class="headlight-beam" />
+                </g>
+
+                <!-- Detailed Motorcycle Vessel -->
+                <g class="motorcycle-vessel" filter="url(#bikeGlow)" transform="rotate(-30)">
+                  <ellipse cx="0" cy="0" rx="15" ry="15" fill="#ffffff" />
+                  <circle cx="0" cy="0" r="13" fill="#1b1e26" />
+                  <circle cx="-7" cy="2" r="3.5" fill="#334155" stroke="#e2e8f0" stroke-width="1.2" />
+                  <circle cx="7" cy="2" r="3.5" fill="#334155" stroke="#e2e8f0" stroke-width="1.2" />
+                  <path d="M -7,2 L -2,2 L 3,0 L 7,2" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" fill="none" />
+                  <path d="M -3,0 L 2, -1 L 4, -4 L 1, -4 Z" fill="#d62327" />
+                  <rect x="-8" y="-7" width="5.5" height="6.5" rx="1" fill="#d62327" stroke="#ffffff" stroke-width="0.8" />
+                  <rect x="-7" y="-4" width="3.5" height="1" fill="#ffffff" />
+                  <circle cx="0.5" cy="-6.5" r="2.8" fill="#d62327" stroke="#ffffff" stroke-width="0.8" />
+                  <path d="M 1.5,-7 L 3,-6.5 L 1.5,-6 Z" fill="#111827" />
+                  <path d="M 4,-4 L 6,-5" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
+                  <circle cx="8" cy="0" r="1.5" fill="#fef08a" />
+                </g>
+
+                <!-- Live Tag Floating Above Captain -->
+                <g transform="translate(0, -25)">
+                  <rect x="-42" y="-10" width="84" height="20" rx="10" fill="#12151c" stroke="#d62327" stroke-width="1.5" />
+                  <circle cx="-28" cy="0" r="3" fill="#22c55e" />
+                  <text x="5" y="4" font-family="'Readex Pro', sans-serif" font-size="8.5" fill="#ffffff" font-weight="700" text-anchor="middle">كابتن أحمد المباشر</text>
+                </g>
+              </g>
+            </svg>
+
+            <!-- Bottom Floating ETA & Location Chip Card -->
+            <div class="map-eta-chip">
+              <div class="eta-content-left">
+                <div class="eta-time-row">
+                  <span class="eta-main">١٤ دقيقة</span>
+                  <span class="eta-badge-live">مباشر GPS</span>
+                </div>
+                <div class="eta-sub">المتبقي ١.٤ كم • الوجهة: حي الجامعة</div>
+              </div>
+              <div class="eta-actions-right">
+                <button class="map-control-btn" onclick="showToast('تمت إعادة ضبط وتوسيط الخريطة على موقعك', 'normal')" title="توسيط موقعي">
+                  <span class="material-symbols-outlined text-[17px]" style="color: var(--primary);">my_location</span>
+                  <span>موقعي</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Clean Stops List with Visual Timeline -->
+          <div class="stops-card">
+            <!-- Stop 1 -->
+            <div class="stop-row done">
+              <div class="stop-circle">✓</div>
+              <div class="stop-info">
+                <div class="stop-title">فرع توب شيف الزقازيق</div>
+                <div class="stop-sub">تم استلام وتجهيز الوجبات الساخنة</div>
+              </div>
+            </div>
+
+            <!-- Stop 2 -->
+            <div class="stop-row active">
+              <div class="stop-circle">٢</div>
+              <div class="stop-info">
+                <div class="stop-title">حي الجامعة — م. كريم عبد العزيز</div>
+                <div class="stop-sub">الوجهة الحالية • مطلوب ٣٥٠ ج.م نقداً</div>
+              </div>
+            </div>
+
+            <!-- Stop 3 -->
+            <div class="stop-row next">
+              <div class="stop-circle">٣</div>
+              <div class="stop-info">
+                <div class="stop-title">شارع المحافظة — أ. سارة محمود</div>
+                <div class="stop-sub">المحطة القادمة • مدفوع إلكترونياً عبر إنستاباي</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Note -->
+          <div class="note-box" style="margin-bottom: 16px;">
+            <span class="material-symbols-outlined text-[18px]">info</span>
+            <span>ملاحظة: رن الجرس، عدم ترك الطلب بالخارج مطلقا</span>
+          </div>
+
+          <!-- Arrived CTA -->
+          <div class="btn-center-wrapper">
+            <button class="btn-primary" id="arrivedAtCustomerBtn">
+              <span class="material-symbols-outlined">location_on</span>
+              <span>وصلت لموقع العميل</span>
+            </button>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 3: STOP DETAILS (تفاصيل الطلب)         -->
+        <!-- ========================================== -->
+        <section class="app-view" id="view-details">
+          <div class="view-sub-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button class="back-btn" onclick="navigateTo('home')" title="الرجوع للرئيسية">
+                <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+              </button>
+              <div class="view-sub-title">تفاصيل الطلب والتسليم</div>
+            </div>
+            <div class="order-tag">طلب 1428</div>
+          </div>
+
+          <!-- Customer & Address -->
+          <div class="details-customer-card">
+            <div class="customer-header-row">
+              <div>
+                <div class="customer-name" style="font-size: 15px;">م. كريم عبد العزيز</div>
+                <div class="customer-role">العميل</div>
+              </div>
+              <a href="tel:01012345678" class="call-btn">
+                <span class="material-symbols-outlined text-[16px]">call</span>
+                <span>اتصال هاتفي</span>
+              </a>
+            </div>
+
+            <div class="address-row">
+              <span class="material-symbols-outlined text-[18px]" style="color: var(--primary); margin-top: 2px;">location_on</span>
+              <div>
+                <div style="font-weight: 700;">حي الجامعة، بجوار مسجد القدس</div>
+                <div style="color: var(--text-muted); font-size: 12px; margin-top: 2px;">عمارة السعادة • الدور الرابع • شقة ٨</div>
+              </div>
+            </div>
+
+            <div class="note-box">
+              <span class="material-symbols-outlined text-[16px]">notifications_active</span>
+              <span>رن الجرس، عدم ترك الطلب بالخارج مطلقا</span>
+            </div>
+          </div>
+
+          <!-- Order Items & Full Financial Receipt -->
+          <div class="items-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span class="items-header" style="margin-bottom: 0;">أصناف الطلب</span>
+              <span class="payment-method-badge cash">نقدي عند الاستلام</span>
+            </div>
+
+            <div class="item-line">
+              <div class="item-name-wrap">
+                <span class="item-qty-tag">١×</span>
+                <span>نصف فرخة مشوية على الفحم</span>
+              </div>
+              <span class="item-cost">١٨٠ ج.م</span>
+            </div>
+            <div class="item-line">
+              <div class="item-name-wrap">
+                <span class="item-qty-tag">١×</span>
+                <span>شيش طاووق على الفحم بصوص خاص</span>
+              </div>
+              <span class="item-cost">١٢٠ ج.م</span>
+            </div>
+            <div class="item-line">
+              <div class="item-name-wrap">
+                <span class="item-qty-tag">٢×</span>
+                <span>كانز بيبسي + ثومية إضافية</span>
+              </div>
+              <span class="item-cost">٥٠ ج.م</span>
+            </div>
+
+            <!-- Financial Summary Breakdown -->
+            <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border);">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">
+                <span>قيمة طعام المطعم:</span>
+                <span style="font-weight: 700; color: var(--text-primary);">٣٢٠ ج.م</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">
+                <span>أتعاب التوصيل المستحقة:</span>
+                <span style="font-weight: 800; color: var(--success);">+٣٠ ج.م</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cash Collection Checkbox & Total -->
+          <div class="cash-collection-box">
+            <div class="cash-collection-top">
+              <div>
+                <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75);">المطلوب نقداً من العميل</span>
+                <div style="font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px;">يشمل طعام المطعم + أتعاب التوصيل</div>
+              </div>
+              <div class="cash-collection-amount">
+                ٣٥٠ <span style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.7);">ج.م</span>
+              </div>
+            </div>
+
+            <label class="cash-check-label" for="cashCheckbox">
+              <span style="font-size: 13px; font-weight: 700;">استلمت المبلغ كاش بالكامل • ٣٥٠ ج.م</span>
+              <input type="checkbox" id="cashCheckbox" style="display: none;">
+              <div class="custom-checkbox">
+                <span class="material-symbols-outlined">check</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="btn-center-wrapper">
+            <button class="btn-primary" id="completeDeliveryBtn" disabled>
+              <span class="material-symbols-outlined">task_alt</span>
+              <span>تأكيد التسليم وإنهاء المحطة</span>
+            </button>
+          </div>
+        </section>
+
+
+        <!-- ======================================================= -->
+        <!-- VIEW 4: FINANCES & CUSTODY (الماليات والعهدة وتوريد الكاش) -->
+        <!-- ======================================================= -->
+        <section class="app-view" id="view-finances">
+          <div class="view-sub-header">
+            <div class="view-sub-title">إدارة العهدة والماليات</div>
+            <div class="order-tag" style="color: var(--price-gold); font-weight: 800;">عهدتك النشطة</div>
+          </div>
+
+          <!-- Finances Hero Overview -->
+          <div class="finances-hero-card">
+            <div class="finances-top-row">
+              <div>
+                <span class="finances-total-badge">إجمالي الكاش في جيبك حالياً</span>
+                <div class="finances-total-num" id="finCashInHand">١,٤٥٠ ج.م</div>
+              </div>
+              <button class="btn-primary" style="width: auto; height: 44px; padding: 0 18px; font-size: 13px;" onclick="openSettlementModal()">
+                <span class="material-symbols-outlined text-[18px]">payments</span>
+                <span>تسليم وتوريد</span>
+              </button>
+            </div>
+
+            <div class="finances-split-grid">
+              <div class="finances-split-item">
+                <span class="label">مستحقات طعام المطعم</span>
+                <span class="value restaurant" id="finRestaurantDue">١,٢١٠ ج.م</span>
+              </div>
+              <div class="finances-split-item">
+                <span class="label">أتعاب التوصيل المستحقة</span>
+                <span class="value rider" id="finRiderFees">٢٤٠ ج.م</span>
+              </div>
+            </div>
+
+            <div style="padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.7);">
+              <span>أوردرات إلكترونية عبر إنستاباي ومحفظة:</span>
+              <span style="font-weight: 700; color: #81d4fa;" id="finDigitalAmount">٢٨٥ ج.م</span>
+            </div>
+          </div>
+
+          <!-- Info banner (Clean & No duplicate CTA) -->
+          <div style="background-color: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-muted); line-height: 1.5;">
+            <span class="material-symbols-outlined text-[20px]" style="color: var(--primary); flex-shrink: 0;">lightbulb</span>
+            <span>يمكنك توريد كامل مستحقات المطعم للكاشير، أو توريد جزء وترك فكة كافية للمشاوير التالية.</span>
+          </div>
+
+          <!-- Settlements Ledger History -->
+          <div class="card">
+            <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--text-primary); display: flex; align-items: center; justify-content: space-between;">
+              <span>سجل التوريدات السابقة اليوم</span>
+              <span style="font-size: 11px; color: var(--text-muted);">إيصالات معتمدة</span>
+            </div>
+
+            <div class="ledger-list" id="settlementsLedgerList">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 5: HISTORY (سجل الطلبات)               -->
+        <!-- ========================================== -->
+        <section class="app-view" id="view-history">
+          <div class="view-sub-header">
+            <div class="view-sub-title">سجل الطلبات المكتملة</div>
+            <div class="order-tag">٨ طلبات اليوم</div>
+          </div>
+
+          <!-- Custom History Filter Dropdown -->
+          <div style="margin-bottom: 14px;">
+            <div class="app-custom-dropdown" id="historyFilterDropdown" data-value="all">
+              <input type="hidden" id="historyFilterInput" value="all" onchange="filterHistoryOrders(this.value)">
+              <button type="button" class="dropdown-trigger-btn" onclick="toggleCustomDropdown('historyFilterDropdown')">
+                <div class="dropdown-selected-content">
+                  <span class="material-symbols-outlined dropdown-item-icon">filter_list</span>
+                  <span class="dropdown-selected-label">جميع الطلبات المسلمة</span>
+                </div>
+                <span class="dropdown-arrow-glyph material-symbols-outlined">expand_more</span>
+              </button>
+
+              <div class="dropdown-menu-panel">
+                <div class="dropdown-option-item selected" data-value="all" onclick="selectDropdownOption('historyFilterDropdown', 'all', 'filter_list', 'جميع الطلبات المسلمة')">
+                  <div class="option-item-content">
+                    <span class="material-symbols-outlined">filter_list</span>
+                    <span>جميع الطلبات المسلمة</span>
+                  </div>
+                  <span class="material-symbols-outlined option-check-icon">check</span>
+                </div>
+                <div class="dropdown-option-item" data-value="cash" onclick="selectDropdownOption('historyFilterDropdown', 'cash', 'payments', 'طلبات الدفع النقدي')">
+                  <div class="option-item-content">
+                    <span class="material-symbols-outlined">payments</span>
+                    <span>طلبات الدفع النقدي</span>
+                  </div>
+                  <span class="material-symbols-outlined option-check-icon">check</span>
+                </div>
+                <div class="dropdown-option-item" data-value="digital" onclick="selectDropdownOption('historyFilterDropdown', 'digital', 'credit_card', 'طلبات إلكترونية • إنستاباي')">
+                  <div class="option-item-content">
+                    <span class="material-symbols-outlined">credit_card</span>
+                    <span>طلبات إلكترونية • إنستاباي</span>
+                  </div>
+                  <span class="material-symbols-outlined option-check-icon">check</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="history-list" id="historyItemsList">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 6: PROFILE (حسابي)                    -->
+        <!-- ========================================== -->
+        <section class="app-view" id="view-profile">
+          <div class="profile-card">
+            <div class="avatar-wrapper">
+              <img class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="كابتن أحمد">
+            </div>
+            <div class="profile-name">كابتن أحمد عبد الحميد</div>
+            <div class="profile-branch">فرع الزقازيق الرئيسي • وردية نشطة</div>
+          </div>
+
+          <!-- Custody Card Link -->
+          <div class="custody-card" onclick="navigateTo('finances')" style="cursor: pointer;">
+            <div>
+              <div style="font-size: 12px; color: rgba(255,255,255,0.75);">إجمالي العهدة النقدية باليد</div>
+              <div class="custody-val" id="profileCustodyCash">١,٤٥٠ ج.م</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--price-gold); font-weight: 700;">
+              <span>إدارة العهدة</span>
+              <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+            </div>
+          </div>
+
+          <!-- Shift & App Details -->
+          <div class="card" style="margin-top: 14px;">
+            <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 8px 0;">
+              <span style="color: var(--text-muted);">بدء الوردية:</span>
+              <span style="font-weight: 700;">١٢:٣٠ م</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 8px 0; border-top: 1px solid var(--surface-muted);">
+              <span style="color: var(--text-muted);">نوع المركبة:</span>
+              <span style="font-weight: 700;">دراجة نارية • سكوتر</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 8px 0; border-top: 1px solid var(--surface-muted);">
+              <span style="color: var(--text-muted);">حالة الربط بالنظام:</span>
+              <span style="font-weight: 700; color: var(--success);">متصل بالخادم المحلي</span>
+            </div>
+          </div>
+
+          <!-- Theme Appearance Selector -->
+          <div class="card" style="margin-top: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700;">
+              <span style="display: flex; align-items: center; gap: 6px;">
+                <span class="material-symbols-outlined text-[17px]" style="color: var(--primary);">contrast</span>
+                <span>مظهر التطبيق الليلي والفاتح</span>
+              </span>
+              <span id="currentThemeLabel" style="font-size: 11px; color: var(--text-muted); font-weight: 600;">فاتح</span>
+            </div>
+
+            <div class="theme-switch-pills">
+              <button class="theme-pill-btn active" id="pillThemeLight" onclick="setAppTheme('light')">
+                <span class="material-symbols-outlined text-[15px]">light_mode</span>
+                <span>فاتح</span>
+              </button>
+              <button class="theme-pill-btn" id="pillThemeDark" onclick="setAppTheme('dark')">
+                <span class="material-symbols-outlined text-[15px]">dark_mode</span>
+                <span>ليلي</span>
+              </button>
+              <button class="theme-pill-btn" id="pillThemeAuto" onclick="setAppTheme('auto')">
+                <span class="material-symbols-outlined text-[15px]">settings_brightness</span>
+                <span>تلقائي</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px; align-items: center;">
+            <button class="btn-secondary" onclick="triggerAppSplash()">
+              <span class="material-symbols-outlined text-[18px]" style="color: var(--primary);">play_circle</span>
+              <span>استعراض شاشة البداية وشعار المطعم</span>
+            </button>
+            <button class="btn-secondary" onclick="navigateTo('auth')">
+              <span class="material-symbols-outlined">swap_horiz</span>
+              <span>تبديل الحساب أو شاشة الدخول</span>
+            </button>
+            <button class="btn-secondary" style="color: var(--error);" onclick="logout()">
+              <span class="material-symbols-outlined">logout</span>
+              <span>تسجيل الخروج من الوردية</span>
+            </button>
+          </div>
+        </section>
+
+
+        <!-- ======================================================= -->
+        <!-- VIEW 7: AUTH & LOGIN (تسجيل الدخول)                     -->
+        <!-- ======================================================= -->
+        <section class="app-view" id="view-auth">
+          <div class="auth-box">
+            <img src="assets/logo.png" alt="لوجو مطعم توب شيف" style="width: 78px; height: 78px; border-radius: 50%; box-shadow: 0 4px 20px rgba(214, 35, 39, 0.25); margin-bottom: 12px; background: #ffffff;">
+            <h1 class="auth-heading">توب شيف كابتن</h1>
+            <p class="auth-subheading">تسجيل دخول طاقم التوصيل السريع</p>
+
+            <div class="form-group">
+              <label class="form-label" for="loginUsername">رقم الهاتف أو اسم المستخدم</label>
+              <input type="text" id="loginUsername" class="form-input" value="01012345678" placeholder="01012345678">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="loginPassword">كلمة المرور أو رمز الـ PIN</label>
+              <input type="password" id="loginPassword" class="form-input" value="123456" placeholder="••••••••">
+            </div>
+
+            <!-- Custom Branch Dropdown in Login -->
+            <div class="form-group">
+              <label class="form-label">فرع العمل المخصص للوردية</label>
+              <div class="app-custom-dropdown" id="loginBranchDropdown" data-value="فرع الزقازيق الرئيسي">
+                <input type="hidden" id="loginBranchInput" value="فرع الزقازيق الرئيسي">
+                <button type="button" class="dropdown-trigger-btn" onclick="toggleCustomDropdown('loginBranchDropdown')">
+                  <div class="dropdown-selected-content">
+                    <span class="material-symbols-outlined dropdown-item-icon">storefront</span>
+                    <span class="dropdown-selected-label">فرع الزقازيق الرئيسي</span>
+                  </div>
+                  <span class="dropdown-arrow-glyph material-symbols-outlined">expand_more</span>
+                </button>
+
+                <div class="dropdown-menu-panel">
+                  <div class="dropdown-option-item selected" data-value="فرع الزقازيق الرئيسي" onclick="selectDropdownOption('loginBranchDropdown', 'فرع الزقازيق الرئيسي', 'storefront')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">storefront</span>
+                      <span>فرع الزقازيق الرئيسي</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                  <div class="dropdown-option-item" data-value="فرع مدينة نصر" onclick="selectDropdownOption('loginBranchDropdown', 'فرع مدينة نصر', 'storefront')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">storefront</span>
+                      <span>فرع مدينة نصر</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                  <div class="dropdown-option-item" data-value="فرع المهندسين" onclick="selectDropdownOption('loginBranchDropdown', 'فرع المهندسين', 'storefront')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">storefront</span>
+                      <span>فرع المهندسين</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                  <div class="dropdown-option-item" data-value="فرع التجمع الخامس" onclick="selectDropdownOption('loginBranchDropdown', 'فرع التجمع الخامس', 'storefront')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">storefront</span>
+                      <span>فرع التجمع الخامس</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-center-wrapper">
+              <button class="btn-primary" id="loginSubmitBtn" onclick="handleLogin()" style="margin-top: 12px;">
+                <span class="material-symbols-outlined">login</span>
+                <span>تسجيل الدخول للوردية</span>
+              </button>
+            </div>
+
+            <div style="text-align: center; margin-top: 24px;">
+              <span style="font-size: 13px; color: var(--text-muted);">كابتن جديد لأول مرة؟</span>
+              <a href="javascript:void(0)" onclick="navigateTo('register')" style="font-size: 13px; font-weight: 800; color: var(--primary); text-decoration: none; margin-right: 4px;">إنشاء حساب كابتن</a>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ======================================================= -->
+        <!-- VIEW 8: REGISTER (تسجيل كابتن جديد)                     -->
+        <!-- ======================================================= -->
+        <section class="app-view" id="view-register">
+          <div class="auth-box">
+            <img src="assets/logo.png" alt="لوجو مطعم توب شيف" style="width: 78px; height: 78px; border-radius: 50%; box-shadow: 0 4px 20px rgba(214, 35, 39, 0.25); margin-bottom: 12px; background: #ffffff;">
+            <h1 class="auth-heading">تسجيل كابتن جديد</h1>
+            <p class="auth-subheading">انضم لفريق توصيل توب شيف المعتمد</p>
+
+            <div class="form-group">
+              <label class="form-label" for="regFullName">الاسم بالكامل</label>
+              <input type="text" id="regFullName" class="form-input" placeholder="مثال: أحمد عبد الحميد">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regPhone">رقم الموبايل والواتساب</label>
+              <input type="tel" id="regPhone" class="form-input" placeholder="010XXXXXXXX">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">نوع وسيلة التوصيل</label>
+              <div class="app-custom-dropdown" id="regVehicleDropdown" data-value="دراجة نارية • موتوسيكل">
+                <input type="hidden" id="regVehicle" value="دراجة نارية • موتوسيكل">
+                <button type="button" class="dropdown-trigger-btn" onclick="toggleCustomDropdown('regVehicleDropdown')">
+                  <div class="dropdown-selected-content">
+                    <span class="material-symbols-outlined dropdown-item-icon">two_wheeler</span>
+                    <span class="dropdown-selected-label">دراجة نارية • موتوسيكل</span>
+                  </div>
+                  <span class="dropdown-arrow-glyph material-symbols-outlined">expand_more</span>
+                </button>
+
+                <div class="dropdown-menu-panel">
+                  <div class="dropdown-option-item selected" data-value="دراجة نارية • موتوسيكل" onclick="selectDropdownOption('regVehicleDropdown', 'دراجة نارية • موتوسيكل', 'two_wheeler')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">two_wheeler</span>
+                      <span>دراجة نارية • موتوسيكل</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                  <div class="dropdown-option-item" data-value="سكوتر كهربائي أو بنزين" onclick="selectDropdownOption('regVehicleDropdown', 'سكوتر كهربائي أو بنزين', 'moped')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">moped</span>
+                      <span>سكوتر كهربائي أو بنزين</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                  <div class="dropdown-option-item" data-value="دراجة هوائية" onclick="selectDropdownOption('regVehicleDropdown', 'دراجة هوائية', 'pedal_bike')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">pedal_bike</span>
+                      <span>دراجة هوائية</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                  <div class="dropdown-option-item" data-value="سيارة نقل خفيف" onclick="selectDropdownOption('regVehicleDropdown', 'سيارة نقل خفيف', 'local_shipping')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">local_shipping</span>
+                      <span>سيارة نقل خفيف</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Custom Desired Branch in Registration -->
+            <div class="form-group">
+              <label class="form-label">فرع العمل المطلوب الانضمام له</label>
+              <div class="app-custom-dropdown" id="regBranchDropdown" data-value="فرع الزقازيق الرئيسي">
+                <input type="hidden" id="regBranchInput" value="فرع الزقازيق الرئيسي">
+                <button type="button" class="dropdown-trigger-btn" onclick="toggleCustomDropdown('regBranchDropdown')">
+                  <div class="dropdown-selected-content">
+                    <span class="material-symbols-outlined dropdown-item-icon">storefront</span>
+                    <span class="dropdown-selected-label">فرع الزقازيق الرئيسي</span>
+                  </div>
+                  <span class="dropdown-arrow-glyph material-symbols-outlined">expand_more</span>
+                </button>
+
+                <div class="dropdown-menu-panel">
+                  <div class="dropdown-option-item selected" data-value="فرع الزقازيق الرئيسي" onclick="selectDropdownOption('regBranchDropdown', 'فرع الزقازيق الرئيسي', 'storefront')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">storefront</span>
+                      <span>فرع الزقازيق الرئيسي</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                  <div class="dropdown-option-item" data-value="فرع مدينة نصر" onclick="selectDropdownOption('regBranchDropdown', 'فرع مدينة نصر', 'storefront')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">storefront</span>
+                      <span>فرع مدينة نصر</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                  <div class="dropdown-option-item" data-value="فرع المهندسين" onclick="selectDropdownOption('regBranchDropdown', 'فرع المهندسين', 'storefront')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">storefront</span>
+                      <span>فرع المهندسين</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                  <div class="dropdown-option-item" data-value="فرع التجمع الخامس" onclick="selectDropdownOption('regBranchDropdown', 'فرع التجمع الخامس', 'storefront')">
+                    <div class="option-item-content">
+                      <span class="material-symbols-outlined">storefront</span>
+                      <span>فرع التجمع الخامس</span>
+                    </div>
+                    <span class="material-symbols-outlined option-check-icon">check</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-center-wrapper">
+              <button class="btn-primary" id="registerSubmitBtn" onclick="handleRegister()" style="margin-top: 12px;">
+                <span class="material-symbols-outlined">how_to_reg</span>
+                <span>إنشاء الحساب ومتابعة التحقق</span>
+              </button>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+              <a href="javascript:void(0)" onclick="navigateTo('auth')" style="font-size: 13px; font-weight: 700; color: var(--text-muted); text-decoration: none;">لديك حساب بالفعل؟ تسجيل الدخول</a>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ======================================================= -->
+        <!-- VIEW 9: OTP VERIFICATION (كود التحقق)                  -->
+        <!-- ======================================================= -->
+        <section class="app-view" id="view-otp">
+          <div class="auth-box">
+            <div class="auth-brand-logo" style="background-color: var(--price-gold-bg); color: #986300;">
+              <span class="material-symbols-outlined text-[32px]">verified_user</span>
+            </div>
+            <h1 class="auth-heading">رمز التحقق السداسي</h1>
+            <p class="auth-subheading">
+              أدخل كود التحقق المرسل إلى: <br>
+              <strong id="otpTargetPhone" style="color: var(--text-primary); direction: ltr; display: inline-block;">01012345678</strong>
+            </p>
+
+            <div class="otp-container">
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" value="7">
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" value="4">
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" value="2">
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" value="9">
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" value="1">
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" value="5">
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">
+              <span>إعادة إرسال الرمز خلال:</span>
+              <span id="otpCountdownLabel" style="font-weight: 700; color: var(--primary); direction: ltr;">00:45</span>
+              <button id="otpResendBtn" onclick="resendOtp()" style="display: none; background: none; border: none; color: var(--primary); font-weight: 700; cursor: pointer; font-family: inherit;">إعادة الإرسال الآن</button>
+            </div>
+
+            <div class="btn-center-wrapper">
+              <button class="btn-primary" id="verifyOtpBtn" onclick="handleOtpVerify()">
+                <span class="material-symbols-outlined">verified</span>
+                <span>تأكيد الرمز وبدء الوردية</span>
+              </button>
+            </div>
+
+            <div style="text-align: center; margin-top: 18px;">
+              <a href="javascript:void(0)" onclick="navigateTo('auth')" style="font-size: 13px; font-weight: 700; color: var(--text-muted); text-decoration: none;">تغيير رقم الموبايل</a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- MODAL BOTTOM SHEET: CUSTODY SETTLEMENT (التوريد الجزئي/الكلي) -->
+      <!-- ======================================================= -->
+      <div class="modal-overlay" id="settlementModal">
+        <div class="modal-sheet">
+          <div class="modal-drag-bar"></div>
+          
+          <div class="modal-header-row">
+            <h3 class="modal-title">توريد الكاش للمطعم</h3>
+            <button class="modal-close-btn" onclick="closeSettlementModal()">
+              <span class="material-symbols-outlined text-[18px]">close</span>
+            </button>
+          </div>
+
+          <div style="background-color: var(--surface-muted); padding: 12px 14px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 12px; color: var(--text-muted);">مستحقات المطعم الحالية:</span>
+            <span style="font-size: 16px; font-weight: 800; color: var(--primary);" id="maxRestaurantDueLabel">١,٢١٠ ج.م</span>
+          </div>
+
+          <!-- Quick Presets -->
+          <div>
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 8px;">خيارات التوريد السريع المجهزة:</label>
+            <div class="quick-amount-chips">
+              <button class="quick-chip active" data-preset="all">كامل المستحق • ١,٢١٠ ج.م</button>
+              <button class="quick-chip" data-preset="leave_fakka">ترك فكة • توريد ١,٠٠٠ ج.م</button>
+              <button class="quick-chip" data-preset="1000">١,٠٠٠ ج.م نقداً</button>
+              <button class="quick-chip" data-preset="500">٥٠٠ ج.م نقداً</button>
+            </div>
+          </div>
+
+          <!-- Custom Amount Input -->
+          <div>
+            <label style="font-size: 12px; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 6px;">المبلغ المراد تسليمه الآن</label>
+            <div class="settlement-input-wrap">
+              <input type="number" id="settlementAmountInput" class="settlement-input" value="1210">
+              <span class="settlement-currency">جنيه مصري</span>
+            </div>
+          </div>
+
+          <!-- Receiver Cashier Custom Dropdown -->
+          <div>
+            <label style="font-size: 12px; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 6px;">المستلم المسؤول في الخزينة</label>
+            <div class="app-custom-dropdown" id="settlementReceiverDropdown" data-value="أ. محمود عزت • كاشير الفرع">
+              <input type="hidden" id="settlementReceiverSelect" value="أ. محمود عزت • كاشير الفرع">
+              <button type="button" class="dropdown-trigger-btn" onclick="toggleCustomDropdown('settlementReceiverDropdown')">
+                <div class="dropdown-selected-content">
+                  <span class="material-symbols-outlined dropdown-item-icon">account_balance_wallet</span>
+                  <span class="dropdown-selected-label">أ. محمود عزت • كاشير الفرع</span>
+                </div>
+                <span class="dropdown-arrow-glyph material-symbols-outlined">expand_more</span>
+              </button>
+
+              <div class="dropdown-menu-panel">
+                <div class="dropdown-option-item selected" data-value="أ. محمود عزت • كاشير الفرع" onclick="selectDropdownOption('settlementReceiverDropdown', 'أ. محمود عزت • كاشير الفرع', 'account_balance_wallet')">
+                  <div class="option-item-content">
+                    <span class="material-symbols-outlined">account_balance_wallet</span>
+                    <span>أ. محمود عزت • كاشير الفرع</span>
+                  </div>
+                  <span class="material-symbols-outlined option-check-icon">check</span>
+                </div>
+                <div class="dropdown-option-item" data-value="أ. إبراهيم خليل • الخزينة المركزية" onclick="selectDropdownOption('settlementReceiverDropdown', 'أ. إبراهيم خليل • الخزينة المركزية', 'savings')">
+                  <div class="option-item-content">
+                    <span class="material-symbols-outlined">savings</span>
+                    <span>أ. إبراهيم خليل • الخزينة المركزية</span>
+                  </div>
+                  <span class="material-symbols-outlined option-check-icon">check</span>
+                </div>
+                <div class="dropdown-option-item" data-value="المدير المناوب للفرع" onclick="selectDropdownOption('settlementReceiverDropdown', 'المدير المناوب للفرع', 'badge')">
+                  <div class="option-item-content">
+                    <span class="material-symbols-outlined">badge</span>
+                    <span>المدير المناوب للفرع</span>
+                  </div>
+                  <span class="material-symbols-outlined option-check-icon">check</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div>
+            <label style="font-size: 12px; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 6px;">ملاحظات إضافية اختيارية</label>
+            <input type="text" id="settlementNotesInput" class="form-input" placeholder="مثال: توريد نقدي - تركت فكة للمشاوير">
+          </div>
+
+          <div class="btn-center-wrapper">
+            <button class="btn-primary" id="confirmSettlementBtn" onclick="submitSettlement()">
+              <span class="material-symbols-outlined">payments</span>
+              <span>تأكيد التوريد واستخراج الإيصال</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Bottom Navigation -->
+      <div class="bottom-nav-wrapper">
+        <nav class="bottom-nav">
+          <button class="nav-item active" data-view="home" title="الرئيسية">
+            <span class="material-symbols-outlined">grid_view</span>
+            <span class="label">الرئيسية</span>
+          </button>
+
+          <button class="nav-item" data-view="trip" title="الرحلة">
+            <span class="material-symbols-outlined">two_wheeler</span>
+            <span class="label">الرحلة</span>
+          </button>
+
+          <button class="nav-item" data-view="finances" title="الماليات والعهدة">
+            <span class="material-symbols-outlined">account_balance_wallet</span>
+            <span class="label">الماليات</span>
+          </button>
+
+          <button class="nav-item" data-view="history" title="السجل">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <span class="label">السجل</span>
+          </button>
+
+          <button class="nav-item" data-view="profile" title="حسابي">
+            <span class="material-symbols-outlined">person</span>
+            <span class="label">حسابي</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- App Toast Alert -->
+      <div id="appToast" class="toast-alert">
+        <span class="material-symbols-outlined text-[19px]" id="toastIcon">check_circle</span>
+        <span id="toastMessage" style="font-size: 13px; font-weight: 600;">تم الحفظ بنجاح</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

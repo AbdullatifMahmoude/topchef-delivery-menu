@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>توب شيف | المنيو الرسمي</title>
+  <meta name="description" content="منيو مطعم توب شيف الرسمي. مشويات على الفحم، مقليات مقرمشة، سندوتشات ووجبات بألذ طعم.">
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700;800;900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/topchef_skewer_logo.png">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Floating Live Demo Switcher -->
+  <aside class="demo-live-switcher" aria-label="تبديل معاينة التصاميم">
+    <a href="../" class="demo-switch-link">
+      <span class="material-symbols-outlined">two_wheeler</span>
+      <span>تطبيق الدليفري</span>
+    </a>
+    <a href="./" class="demo-switch-link active">
+      <span class="material-symbols-outlined">restaurant_menu</span>
+      <span>منيو الزبائن</span>
+    </a>
+  </aside>
+
+  <div class="app-container">
+    <div class="mobile-frame">
+      <div class="device-notch"></div>
+
+      <!-- Native Status Bar Mockup -->
+      <div class="app-status-bar">
+        <span>9:41</span>
+        <div class="status-bar-icons">
+          <span class="material-symbols-outlined" style="font-size:16px;">signal_cellular_4_bar</span>
+          <span class="material-symbols-outlined" style="font-size:16px;">wifi</span>
+          <span class="material-symbols-outlined" style="font-size:16px;">battery_full</span>
+        </div>
+      </div>
+
+      <!-- Top Header Bar Matching Stitch Screen Exactly (Left Cart, Center Logo+Location, Right Search) -->
+      <header class="top-header">
+        <!-- Physical Right in RTL: Search Button -->
+        <button class="header-btn search-btn" onclick="openSearchModal()" aria-label="بحث في المنيو" title="بحث">
+          <span class="material-symbols-outlined">search</span>
+        </button>
+
+        <!-- Center: Flame Logo & Branch Location Dropdown -->
+        <div class="header-brand-center" onclick="switchTab('home')">
+          <img src="assets/topchef_clean_flame_logo.png" alt="شعار توب شيف" class="brand-flame-logo">
+          <div class="branch-selector-trigger" onclick="event.stopPropagation(); openBranchSelector()">
+            <span class="material-symbols-outlined branch-pin-icon">location_on</span>
+            <div class="branch-text-lines">
+              <span class="branch-label-small">التوصيل إلى</span>
+              <span class="branch-current-val">
+                <span id="currentBranchName">مدينة نصر</span>
+                <span class="material-symbols-outlined arrow-tiny">expand_more</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Physical Left in RTL: Shopping Cart Button with Red Badge -->
+        <button class="header-btn cart-btn" id="headerCartBtn" onclick="openCartModal()" aria-label="عرض السلة" title="السلة">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          <span class="header-badge" id="headerCartBadge">0</span>
+        </button>
+      </header>
+
+      <!-- Main Scrollable Content Area -->
+      <main class="screen-content" id="screenContent">
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: HOME (الرئيسية) - CRAFTED FROM SCRATCH -->
+        <!-- Pure HTML & CSS - Zero Static Mockup Images -->
+        <!-- ========================================== -->
+        <section class="app-view active" id="view-home">
+          
+          <!-- 1. Hero Section with Dark Smoke & Flames -->
+          <div class="editorial-hero">
+            <div class="hero-smoky-bg"></div>
+            
+            <div class="hero-inner-content">
+              <!-- Main Typography -->
+              <div class="hero-heading-block">
+                <h1 class="hero-headline">مشوي ولا مقلي؟</h1>
+                <div class="hero-subline">
+                  <span class="subline-text">كله عند</span>
+                  <span class="subline-brand">توب شيف</span>
+                  <span class="subline-dash"></span>
+                </div>
+              </div>
+
+              <!-- Two Interactive Promo Cards -->
+              <div class="hero-offers-grid">
+                <!-- Promo Card 1: 30% Off -->
+                <div class="hero-promo-pill" onclick="applyQuickOffer('FAMILY30')" role="button" tabindex="0">
+                  <div class="promo-badge-sq percent-sq">
+                    <span>%</span>
+                  </div>
+                  <div class="promo-info-col">
+                    <strong class="promo-lead">خصم ۳۰٪</strong>
+                    <span class="promo-sub">على الوجبات العائلية</span>
+                  </div>
+                  <span class="material-symbols-outlined promo-chevron">chevron_left</span>
+                </div>
+
+                <!-- Promo Card 2: Free Delivery -->
+                <div class="hero-promo-pill" onclick="applyQuickOffer('FREEDEL')" role="button" tabindex="0">
+                  <div class="promo-badge-sq delivery-sq">
+                    <span class="material-symbols-outlined" style="font-size:18px;">delivery_dining</span>
+                  </div>
+                  <div class="promo-info-col">
+                    <strong class="promo-lead">توصيل مجاني</strong>
+                    <span class="promo-sub">للطلبات فوق ۳۰۰ ج.م</span>
+                  </div>
+                  <span class="material-symbols-outlined promo-chevron">chevron_left</span>
+                </div>
+              </div>
+
+              <!-- Carousel Dots -->
+              <div class="hero-carousel-dots">
+                <span class="h-dot active"></span>
+                <span class="h-dot"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Directory Canvas Area (Warm Light Cream #FAF7F2) -->
+          <div class="directory-canvas-area">
+            
+            <!-- Section Heading: اختار قسمك -->
+            <div class="directory-title-row">
+              <h2 class="directory-main-heading">
+                اختار <span class="accent-word">قسمك<span class="red-bar-dash"></span></span>
+              </h2>
+            </div>
+
+            <!-- 01: المشويات (Showcase Row) -->
+            <div class="category-organic-showcase grill-organic" onclick="selectCategoryAndOpenMenu(1)" role="button" tabindex="0">
+              <div class="organic-meta-side">
+                <span class="peach-large-index">01</span>
+                <h3 class="organic-cat-name">المشويات</h3>
+                <span class="organic-items-num">28 صنف</span>
+                <div class="organic-round-arrow">
+                  <span class="material-symbols-outlined">arrow_back</span>
+                </div>
+              </div>
+
+              <div class="organic-art-side grill-art">
+                <!-- Stylized Red Flame Silhouette -->
+                <svg class="flame-bg-vector" viewBox="0 0 240 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M120 4C135 35 175 25 180 65C185 100 230 95 238 140C246 185 198 208 148 208C88 208 14 178 14 125C14 72 70 76 80 42C86 18 110 4 120 4Z" fill="#D62327"/>
+                  <path d="M180 65C198 48 212 62 225 58C216 80 230 90 238 138C224 114 206 114 200 100C194 84 186 78 180 65Z" fill="#B3191D"/>
+                </svg>
+                <img src="assets/clean_hero_grilled_chicken.png" alt="المشويات - فراخ مشوية على الفحم" class="dish-showcase-image grill-plate-img">
+              </div>
+            </div>
+
+            <!-- 02: المقليات (Showcase Row) -->
+            <div class="category-organic-showcase fried-organic" onclick="selectCategoryAndOpenMenu(2)" role="button" tabindex="0">
+              <div class="organic-meta-side">
+                <span class="peach-large-index">02</span>
+                <h3 class="organic-cat-name">المقليات</h3>
+                <span class="organic-items-num">32 صنف</span>
+                <div class="organic-round-arrow">
+                  <span class="material-symbols-outlined">arrow_back</span>
+                </div>
+              </div>
+
+              <div class="organic-art-side fried-art">
+                <div class="golden-circle-glow"></div>
+                <img src="assets/clean_hero_fried_chicken.png" alt="المقليات - كرسبي مقرمش" class="dish-showcase-image fried-pile-img">
+                <div class="handwritten-chef-note">
+                  <span class="handwritten-phrase">طعم أصلي من شيف</span>
+                  <svg class="handwritten-arrow-svg" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 26C14 24 24 20 22 8M22 8L16 10M22 8L24 15" stroke="#1A1714" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- 03, 04, 05: Pillars Directory (الوجبات، السندوتشات، الإضافات) -->
+            <div class="pillars-arch-row">
+              <!-- 03 الوجبات -->
+              <div class="pillar-arch-item" onclick="selectCategoryAndOpenMenu(3)" role="button" tabindex="0">
+                <div class="pillar-top-info">
+                  <span class="pillar-index-peach">03</span>
+                  <h4 class="pillar-heading-title">الوجبات</h4>
+                  <span class="pillar-subtitle-count">24 صنف</span>
+                  <div class="pillar-arrow-btn">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                  </div>
+                </div>
+                <div class="pillar-image-wrap">
+                  <img src="assets/dish_half_chicken.jpg" alt="الوجبات" class="pillar-photo">
+                </div>
+              </div>
+
+              <!-- 04 السندوتشات -->
+              <div class="pillar-arch-item" onclick="selectCategoryAndOpenMenu(4)" role="button" tabindex="0">
+                <div class="pillar-top-info">
+                  <span class="pillar-index-peach">04</span>
+                  <h4 class="pillar-heading-title">السندوتشات</h4>
+                  <span class="pillar-subtitle-count">18 صنف</span>
+                  <div class="pillar-arrow-btn">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                  </div>
+                </div>
+                <div class="pillar-image-wrap">
+                  <img src="assets/clean_hero_sandwich.png" alt="السندوتشات" class="pillar-photo">
+                </div>
+              </div>
+
+              <!-- 05 الإضافات -->
+              <div class="pillar-arch-item" onclick="selectCategoryAndOpenMenu(5)" role="button" tabindex="0">
+                <div class="pillar-top-info">
+                  <span class="pillar-index-peach">05</span>
+                  <h4 class="pillar-heading-title">الإضافات</h4>
+                  <span class="pillar-subtitle-count">12 صنف</span>
+                  <div class="pillar-arrow-btn">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                  </div>
+                </div>
+                <div class="pillar-image-wrap">
+                  <img src="assets/pure_dish_sauces.png" alt="الإضافات" class="pillar-photo">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: MENU (المنيو)                      -->
+        <!-- ========================================== -->
+        <section class="app-view" id="view-menu">
+          
+          <!-- Sticky Category Nav Rail Matching Stitch Screen -->
+          <nav class="category-nav-strip" id="categoryNavStrip">
+            <button class="category-pill active" data-cat-id="1" onclick="switchCategory(1)">
+              <span class="material-symbols-outlined pill-icon fill">local_fire_department</span>
+              المشويات
+            </button>
+            <button class="category-pill" data-cat-id="2" onclick="switchCategory(2)">
+              <span class="material-symbols-outlined pill-icon">kebab_dining</span>
+              المقليات
+            </button>
+            <button class="category-pill" data-cat-id="3" onclick="switchCategory(3)">
+              <span class="material-symbols-outlined pill-icon">lunch_dining</span>
+              الوجبات
+            </button>
+            <button class="category-pill" data-cat-id="4" onclick="switchCategory(4)">
+              <span class="material-symbols-outlined pill-icon">dinner_dining</span>
+              السندوتشات
+            </button>
+            <button class="category-pill" data-cat-id="5" onclick="switchCategory(5)">
+              <span class="material-symbols-outlined pill-icon">ramen_dining</span>
+              الإضافات
+            </button>
+          </nav>
+
+          <!-- Category Heading & Sort Filter Button -->
+          <div class="category-header-row">
+            <div class="cat-heading-info">
+              <h2 id="activeCategoryHeading">
+                <span class="material-symbols-outlined fill" style="color:var(--primary); font-size:22px;">local_fire_department</span>
+                <span id="activeCategoryTitle">المشويات</span>
+              </h2>
+              <p id="activeCategorySubtitle">طعم المشاوي الأصلي من توب شيف</p>
+            </div>
+            <button class="filter-sort-btn" onclick="openSearchModal()">
+              <span class="material-symbols-outlined" style="font-size:16px;">tune</span>
+              ترتيب وفلترة
+            </button>
+          </div>
+
+          <!-- Product Item Cards Container -->
+          <div class="product-items-list" id="productsItemsList">
+            <!-- Dynamically populated by JS matching the Stitch items -->
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW 3: ORDERS (طلباتي)                    -->
+        <!-- ========================================== -->
+        <section class="app-view" id="view-orders">
+          <div class="orders-view-wrap" id="ordersViewContainer">
+            <!-- Dynamically populated with active order tracker & past orders history -->
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW 4: PROFILE (حسابي)                    -->
+        <!-- ========================================== -->
+        <section class="app-view" id="view-profile">
+          <div class="profile-view-wrap" id="profileViewContainer">
+            <!-- Dynamically populated with authenticated VIP card / addresses or guest login -->
+          </div>
+        </section>
+
+      </main>
+
+      <!-- ======================================================== -->
+      <!-- Floating Sticky Cart Capsule Bar Matching Stitch Screen   -->
+      <!-- ======================================================== -->
+      <div class="floating-cart-bar hidden" id="floatingCartBar">
+        <button class="floating-cart-action" onclick="openCartModal()">
+          <span class="material-symbols-outlined" style="font-size:18px;">shopping_cart</span>
+          <span>عرض السلة</span>
+        </button>
+
+        <div class="floating-cart-summary">
+          <div class="floating-cart-items-count">
+            <span id="floatingCartCount">0</span>
+            <span>أصناف</span>
+          </div>
+          <div class="cart-divider-vert"></div>
+          <div class="floating-cart-total-price" id="floatingCartTotal">
+            0 ج.م
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- Bottom Navigation Bar Matching Stitch Screen Exactly     -->
+      <!-- ======================================================== -->
+      <nav class="bottom-nav-bar">
+        <button class="nav-item-btn active" id="nav-btn-home" onclick="switchTab('home')">
+          <span class="material-symbols-outlined nav-icon fill">home</span>
+          <span>الرئيسية</span>
+        </button>
+
+        <button class="nav-item-btn" id="nav-btn-menu" onclick="switchTab('menu')">
+          <span class="material-symbols-outlined nav-icon">restaurant_menu</span>
+          <span>المنيو</span>
+        </button>
+
+        <button class="nav-item-btn" id="nav-btn-orders" onclick="switchTab('orders')">
+          <span class="material-symbols-outlined nav-icon">receipt_long</span>
+          <span>طلباتي</span>
+        </button>
+
+        <button class="nav-item-btn" id="nav-btn-profile" onclick="switchTab('profile')">
+          <span class="material-symbols-outlined nav-icon">person</span>
+          <span>حسابي</span>
+        </button>
+      </nav>
+
+      <!-- ======================================================== -->
+      <!-- MODAL 1: Cart Bottom Sheet                              -->
+      <!-- ======================================================== -->
+      <div class="modal-overlay" id="cartModalOverlay" onclick="if(event.target===this) closeCartModal()">
+        <div class="bottom-sheet">
+          <div class="sheet-handle-bar"></div>
+          <div class="sheet-header">
+            <h3 class="sheet-title">سلة الطلبات</h3>
+            <button class="sheet-close-btn" onclick="closeCartModal()">✕</button>
+          </div>
+
+          <div class="sheet-body">
+            <div class="cart-items-container" id="cartItemsContainer">
+              <!-- Rendered by JS -->
+            </div>
+
+            <!-- Promo Code Input -->
+            <div style="display:flex; gap:8px; margin-bottom:14px;">
+              <input type="text" id="promoCodeInput" class="form-input-text" placeholder="كود الخصم (مثال: FAMILY30)" style="text-transform:uppercase;">
+              <button onclick="applyPromoFromCart()" style="padding:0 18px; background:var(--charcoal); color:#fff; border-radius:var(--radius-md); font-weight:700; font-size:13px; white-space:nowrap;">تطبيق</button>
+            </div>
+
+            <!-- Totals Breakdown -->
+            <div class="cart-totals-breakdown">
+              <div class="total-row">
+                <span>المجموع الفرعي:</span>
+                <span id="cartSubtotalText">0 ج.م</span>
+              </div>
+              <div class="total-row" id="cartDiscountRow" style="display:none; color:var(--primary); font-weight:700;">
+                <span id="cartDiscountLabel">خصم العرض:</span>
+                <span id="cartDiscountText">- 0 ج.م</span>
+              </div>
+              <div class="total-row">
+                <span>رسوم التوصيل:</span>
+                <span id="cartDeliveryFeeText">حسب العنوان</span>
+              </div>
+              <div class="total-row final">
+                <span>الإجمالي النهائي:</span>
+                <span class="total-val" id="cartFinalTotalText">0 ج.م</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sheet-footer">
+            <button class="btn-primary-action" onclick="proceedToCheckout()">
+              <span>متابعة إتمام الطلب</span>
+              <span class="material-symbols-outlined" style="font-size:18px;">arrow_back</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- MODAL 2: Checkout Bottom Sheet                          -->
+      <!-- ======================================================== -->
+      <div class="modal-overlay" id="checkoutModalOverlay" onclick="if(event.target===this) closeCheckoutModal()">
+        <div class="bottom-sheet">
+          <div class="sheet-handle-bar"></div>
+          <div class="sheet-header">
+            <h3 class="sheet-title">بيانات الاستلام والتوصيل</h3>
+            <button class="sheet-close-btn" onclick="closeCheckoutModal()">✕</button>
+          </div>
+
+          <div class="sheet-body">
+            <!-- Order Type Switch -->
+            <div class="order-type-switch">
+              <button class="type-switch-btn active" id="typeDeliveryBtn" onclick="setOrderType('delivery')">
+                <span class="material-symbols-outlined" style="font-size:15px; vertical-align:middle;">two_wheeler</span>
+                طلب دليفري
+              </button>
+              <button class="type-switch-btn" id="typeTakeawayBtn" onclick="setOrderType('takeaway')">
+                <span class="material-symbols-outlined" style="font-size:15px; vertical-align:middle;">shopping_bag</span>
+                استلام من الفرع
+              </button>
+            </div>
+
+            <!-- Customer Name & Phone -->
+            <div class="form-field-group">
+              <label class="form-field-label">الاسم بالكامل *</label>
+              <input type="text" id="custNameInput" class="form-input-text" placeholder="اكتب اسمك هنا...">
+            </div>
+
+            <div class="form-field-group">
+              <label class="form-field-label">رقم الهاتف للتأكيد *</label>
+              <input type="tel" id="custPhoneInput" class="form-input-text" placeholder="01xxxxxxxxx" maxlength="11">
+            </div>
+
+            <!-- Address Field -->
+            <div class="form-field-group" id="addressFieldGroup">
+              <label class="form-field-label">العنوان التفصيلي *</label>
+              <input type="text" id="custAddressInput" class="form-input-text" placeholder="المنطقة، اسم الشارع، رقم العمارة أو علامة مميزة...">
+            </div>
+
+            <div class="form-field-group">
+              <label class="form-field-label">ملاحظات إضافية على الطلب</label>
+              <input type="text" id="custNotesInput" class="form-input-text" placeholder="مثال: زيادة طحينة، بدون بصل...">
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="form-field-group">
+              <label class="form-field-label">طريقة الدفع</label>
+              <div class="payment-methods-grid">
+                <button type="button" class="payment-btn active" id="payMethodCash" onclick="setPaymentMethod('cash')">
+                  <span class="material-symbols-outlined fill">payments</span>
+                  <span>كاش عند الاستلام</span>
+                </button>
+                <button type="button" class="payment-btn" id="payMethodInstapay" onclick="setPaymentMethod('instapay')">
+                  <span class="material-symbols-outlined">send_to_mobile</span>
+                  <span>InstaPay</span>
+                </button>
+                <button type="button" class="payment-btn" id="payMethodWallet" onclick="setPaymentMethod('wallet')">
+                  <span class="material-symbols-outlined">account_balance_wallet</span>
+                  <span>محفظة</span>
+                </button>
+              </div>
+            </div>
+
+            <div style="background:rgba(214,35,39,0.06); border:1px solid rgba(214,35,39,0.2); border-radius:var(--radius-md); padding:10px 12px; font-size:11px; color:var(--text-muted); line-height:1.6; margin-top:8px;">
+              ⚠️ <b>تنبيه أمان:</b> بتأكيد الطلب أنت بتأكد إن بياناتك وعنوانك صحيحة. الطلبات الوهمية يتم حظرها فوراً.
+            </div>
+          </div>
+
+          <div class="sheet-footer" style="display:flex; gap:10px;">
+            <button onclick="closeCheckoutModal(); openCartModal();" style="flex:0.35; padding:12px; background:var(--surface-muted); color:var(--text-muted); border-radius:var(--radius-full); font-weight:700;">
+              رجوع
+            </button>
+            <button class="btn-primary-action" id="submitOrderBtn" onclick="confirmAndSubmitOrder()" style="flex:1;">
+              <span>تأكيد وإرسال الطلب</span>
+              <span class="material-symbols-outlined" style="font-size:18px;">check_circle</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- MODAL 3: Order Success Modal                            -->
+      <!-- ======================================================== -->
+      <div class="modal-overlay" id="orderSuccessModal" style="align-items:center; padding:20px;">
+        <div class="order-success-card">
+          <div style="width:60px; height:60px; border-radius:50%; background:rgba(46,125,50,0.12); color:#2e7d32; display:flex; align-items:center; justify-content:center; margin:0 auto 12px;">
+            <span class="material-symbols-outlined fill" style="font-size:36px;">celebration</span>
+          </div>
+          <h2 style="font-size:22px; font-weight:900; color:var(--primary); margin-bottom:6px;">تم استلام طلبك بنجاح!</h2>
+          <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+            سيتم التواصل معك فوراً لتأكيد الطلب وتجهيزه طازة من الفحم.
+          </p>
+
+          <div style="background:var(--surface-muted); border:1px dashed var(--primary); border-radius:var(--radius-md); padding:12px; margin-bottom:16px;">
+            <div style="font-size:11px; color:var(--text-muted);">رقم الطلب الخاص بك</div>
+            <div style="font-size:26px; font-weight:900; color:var(--text-primary); letter-spacing:1px; margin-top:2px;" id="successOrderNumber">#TC-8891</div>
+          </div>
+
+          <button class="btn-primary-action" onclick="finishOrderAndGoHome()">
+            <span>تتبع الطلب</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- MODAL 4: Search & Filter Modal                          -->
+      <!-- ======================================================== -->
+      <div class="modal-overlay" id="searchModalOverlay" onclick="if(event.target===this) closeSearchModal()">
+        <div class="bottom-sheet" style="max-height:92%;">
+          <div class="sheet-handle-bar"></div>
+          <div class="sheet-header">
+            <h3 class="sheet-title">بحث وفلترة المنيو</h3>
+            <button class="sheet-close-btn" onclick="closeSearchModal()">✕</button>
+          </div>
+
+          <div class="sheet-body">
+            <div style="position:relative; margin-bottom:14px;">
+              <input type="text" id="liveSearchInput" class="form-input-text" placeholder="ابحث عن وجبة، ساندوتش، أو صوص..." oninput="handleLiveSearch(this.value)" style="padding-left:36px;">
+              <span class="material-symbols-outlined" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted);">search</span>
+            </div>
+
+            <!-- Quick Filter Chips -->
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
+              <button class="pill-chip active" onclick="filterByTag('all', this)">الكل</button>
+              <button class="pill-chip" onclick="filterByTag('مشاوي', this)">مشاوي على الفحم 🔥</button>
+              <button class="pill-chip" onclick="filterByTag('مقرمش', this)">مقليات كرانشي 🍗</button>
+              <button class="pill-chip" onclick="filterByTag('عروض', this)">عروض حصرية %</button>
+              <button class="pill-chip" onclick="filterByTag('حار', this)">سبايسي 🌶️</button>
+            </div>
+
+            <div class="product-items-list" id="searchResultsList" style="padding:0;">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+      <!-- ======================================================== -->
+      <!-- MODAL 5: Loyalty Points Redemption Modal                -->
+      <!-- ======================================================== -->
+      <div class="modal-overlay" id="loyaltyRedeemModalOverlay" onclick="if(event.target===this) closeLoyaltyModal()">
+        <div class="bottom-sheet">
+          <div class="sheet-handle-bar"></div>
+          <div class="sheet-header">
+            <h3 class="sheet-title" style="display:flex; align-items:center; gap:6px;">
+              <span class="material-symbols-outlined fill" style="color:var(--price-gold);">stars</span>
+              <span>مكافآت نقاط توب شيف</span>
+            </h3>
+            <button class="sheet-close-btn" onclick="closeLoyaltyModal()">✕</button>
+          </div>
+
+          <div class="sheet-body">
+            <div class="loyalty-gold-card" style="margin-bottom:16px;">
+              <div class="loyalty-top-row">
+                <span class="loyalty-badge-tag">
+                  <span class="material-symbols-outlined fill" style="font-size:14px;">military_tech</span>
+                  عضو ذهبي مميز
+                </span>
+                <span style="font-size:11px; opacity:0.8;">رصيدك الحالي</span>
+              </div>
+              <div class="loyalty-points-val">
+                <span id="modalLoyaltyBalance">150</span>
+                <small>نقطة</small>
+              </div>
+            </div>
+
+            <h4 style="font-size:14px; font-weight:800; margin-bottom:10px;">المكافآت المتاحة للاستبدال</h4>
+            <div id="loyaltyRewardsList">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/app.js"></script>
+</body>
+</html>
