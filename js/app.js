@@ -301,7 +301,8 @@ function toggleBreak() {
   if (state.captain.status === 'online') {
     state.captain.status = 'break';
     btn.classList.add('active');
-    btn.innerHTML = '<span class="material-symbols-outlined text-[15px]">play_arrow</span><span>إنهاء الاستراحة</span>';
+    btn.innerHTML = '<span class="material-symbols-outlined text-[15px]">play_arrow</span><span>استئناف</span>';
+    btn.title = 'إنهاء الاستراحة واستئناف العمل';
     statusLabel.textContent = 'في استراحة';
     if (statusDot) statusDot.classList.add('break');
     if (statusPillDot) statusPillDot.classList.add('break');
@@ -310,6 +311,7 @@ function toggleBreak() {
     state.captain.status = 'online';
     btn.classList.remove('active');
     btn.innerHTML = '<span class="material-symbols-outlined text-[15px]">bedtime</span><span>استراحة</span>';
+    btn.title = 'أخذ استراحة مؤقتة';
     statusLabel.textContent = 'متصل وجاهز';
     if (statusDot) statusDot.classList.remove('break');
     if (statusPillDot) statusPillDot.classList.remove('break');

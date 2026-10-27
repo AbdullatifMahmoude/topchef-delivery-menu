@@ -17,6 +17,7 @@ let state = {
   orderType: "delivery",
   paymentMethod: "cash",
   selectedModifier: "عادي",
+  selectedModifiers: {},
   cart: JSON.parse(localStorage.getItem("topchef_cart") || "[]"),
   appliedOffer: null,
   categories: [],
@@ -366,9 +367,13 @@ function renderProducts() {
   }
 
   container.innerHTML = currentProducts.map(product => {
-    const cartEntry = state.cart.find(c => c.id === product.id);
+    // Current chosen modifier for this specific product
+    const activeMod = (state.selectedModifiers && state.selectedModifiers[product.id]) 
+      || (product.modifiers && product.modifiers.length > 0 ? product.modifiers[0] : "عادي");
+
+    const cartEntry = state.cart.find(c => c.id === product.id && c.modifier === activeMod)
+                   || state.cart.find(c => c.id === product.id);
     const inCartQty = cartEntry ? cartEntry.qty : 0;
-    const activeMod = cartEntry ? cartEntry.modifier : (product.modifiers ? product.modifiers[0] : "عادي");
     const hasBakedRibbon = product.image.includes("organic_dish_");
 
     return `
@@ -382,10 +387,10 @@ function renderProducts() {
           ${product.modifiers && product.modifiers.length > 0 ? `
             <div class="product-item-chips">
               ${product.modifiers.map(mod => `
-                <span class="pill-chip ${mod === activeMod ? 'active' : ''}" 
-                      onclick="selectProductModifier(${product.id}, '${mod}')">
-                  ${mod}
-                </span>
+                <button type="button" class="pill-chip ${mod === activeMod ? 'active' : ''}" 
+                        onclick="selectProductModifier(${product.id}, '${mod}')">
+                  ${mod === 'حار' ? 'حار 🌶️' : mod}
+                </button>
               `).join("")}
             </div>
           ` : ""}
@@ -398,18 +403,18 @@ function renderProducts() {
             </div>
 
             <!-- Action Controls Matching Stitch: Stepper with Checkmark OR Circle Plus -->
-            <div>
+            <div class="product-action-slot">
               ${inCartQty > 0 ? `
                 <div class="capsule-stepper-wrap">
                   <div class="capsule-stepper">
-                    <button onclick="decrementItem(${product.id})" aria-label="تقليل">-</button>
+                    <button type="button" onclick="decrementItem(${product.id}, '${activeMod}')" aria-label="تقليل">-</button>
                     <span class="capsule-stepper-val">${inCartQty}</span>
-                    <button onclick="incrementItem(${product.id})" aria-label="زيادة">+</button>
+                    <button type="button" onclick="incrementItem(${product.id}, '${activeMod}')" aria-label="زيادة">+</button>
                   </div>
                   <span class="stepper-check-badge" title="مضاف للسلة">✓</span>
                 </div>
               ` : `
-                <button class="btn-round-add" onclick="addToCart(${product.id})" aria-label="أضف للسلة">
+                <button type="button" class="btn-round-add" onclick="addToCart(${product.id})" aria-label="أضف للسلة">
                   <span class="material-symbols-outlined" style="font-size:22px;">add</span>
                 </button>
               `}
@@ -428,13 +433,63 @@ function renderProducts() {
 }
 
 function selectProductModifier(productId, modifier) {
+  if (!state.selectedModifiers) state.selectedModifiers = {};
+  state.selectedModifiers[productId] = modifier;
   state.selectedModifier = modifier;
-  const cartItem = state.cart.find(c => c.id === productId);
-  if (cartItem) {
-    cartItem.modifier = modifier;
-    saveCart();
+
+  // 1. Instant DOM update for chips on the current card
+  const card = document.getElementById(`product-${productId}`);
+  if (card) {
+    const chips = card.querySelectorAll(".pill-chip");
+    chips.forEach(chip => {
+      const chipRaw = chip.textContent.replace('🌶️', '').trim();
+      if (chipRaw === modifier) {
+        chip.classList.add("active");
+      } else {
+        chip.classList.remove("active");
+      }
+    });
+
+    // Update the action button slot if an item with this modifier is in cart
+    const cartEntry = state.cart.find(c => c.id === productId && c.modifier === modifier);
+    const actionSlot = card.querySelector(".product-action-slot");
+    if (actionSlot) {
+      if (cartEntry && cartEntry.qty > 0) {
+        actionSlot.innerHTML = `
+          <div class="capsule-stepper-wrap">
+            <div class="capsule-stepper">
+              <button type="button" onclick="decrementItem(${productId}, '${modifier}')" aria-label="تقليل">-</button>
+              <span class="capsule-stepper-val">${cartEntry.qty}</span>
+              <button type="button" onclick="incrementItem(${productId}, '${modifier}')" aria-label="زيادة">+</button>
+            </div>
+            <span class="stepper-check-badge" title="مضاف للسلة">✓</span>
+          </div>
+        `;
+      } else {
+        actionSlot.innerHTML = `
+          <button type="button" class="btn-round-add" onclick="addToCart(${productId})" aria-label="أضف للسلة">
+            <span class="material-symbols-outlined" style="font-size:22px;">add</span>
+          </button>
+        `;
+      }
+    }
   }
-  renderProducts();
+
+  // 2. Also update search card if present
+  const searchCard = document.getElementById(`search-product-${productId}`);
+  if (searchCard) {
+    const chips = searchCard.querySelectorAll(".pill-chip");
+    chips.forEach(chip => {
+      const chipRaw = chip.textContent.replace('🌶️', '').trim();
+      if (chipRaw === modifier) {
+        chip.classList.add("active");
+      } else {
+        chip.classList.remove("active");
+      }
+    });
+  }
+
+  showToast(`تم اختيار: ${modifier === 'حار' ? 'حار 🌶️' : modifier}`);
 }
 
 // ==========================================================================
@@ -444,7 +499,9 @@ function addToCart(productId) {
   const product = state.products.find(p => p.id === productId);
   if (!product) return;
 
-  const mod = state.selectedModifier || (product.modifiers ? product.modifiers[0] : "عادي");
+  const mod = (state.selectedModifiers && state.selectedModifiers[productId]) 
+    || (product.modifiers && product.modifiers.length > 0 ? product.modifiers[0] : "عادي");
+
   const existing = state.cart.find(c => c.id === product.id && c.modifier === mod);
 
   if (existing) {
@@ -463,11 +520,13 @@ function addToCart(productId) {
   saveCart();
   renderProducts();
   updateCartUI();
-  showToast(`تمت إضافة ${product.product_name} للسلة`);
+  showToast(`تمت إضافة ${product.product_name} (${mod === 'حار' ? 'حار 🌶️' : mod}) للسلة`);
 }
 
-function incrementItem(productId) {
-  const item = state.cart.find(c => c.id === productId);
+function incrementItem(productId, modifier) {
+  const mod = modifier || (state.selectedModifiers && state.selectedModifiers[productId]) || null;
+  const item = state.cart.find(c => c.id === productId && (!mod || c.modifier === mod))
+            || state.cart.find(c => c.id === productId);
   if (item) {
     item.qty += 1;
     saveCart();
@@ -476,13 +535,16 @@ function incrementItem(productId) {
   }
 }
 
-function decrementItem(productId) {
-  const index = state.cart.findIndex(c => c.id === productId);
-  if (index !== -1) {
-    if (state.cart[index].qty > 1) {
-      state.cart[index].qty -= 1;
+function decrementItem(productId, modifier) {
+  const mod = modifier || (state.selectedModifiers && state.selectedModifiers[productId]) || null;
+  const itemIndex = state.cart.findIndex(c => c.id === productId && (!mod || c.modifier === mod));
+  const fallbackIndex = itemIndex >= 0 ? itemIndex : state.cart.findIndex(c => c.id === productId);
+
+  if (fallbackIndex >= 0) {
+    if (state.cart[fallbackIndex].qty > 1) {
+      state.cart[fallbackIndex].qty -= 1;
     } else {
-      state.cart.splice(index, 1);
+      state.cart.splice(fallbackIndex, 1);
     }
     saveCart();
     renderProducts();
@@ -573,20 +635,42 @@ function renderCartModalItems() {
     return;
   }
 
-  container.innerHTML = state.cart.map(item => `
+  container.innerHTML = state.cart.map((item, index) => `
     <div class="cart-item-row">
       <div class="cart-item-meta">
         <h4>${item.name}</h4>
-        <p>${item.price * item.qty} ج.م <span style="font-size:11px; color:var(--text-muted); font-weight:normal;">(${item.modifier})</span></p>
+        <p>${item.price * item.qty} ج.م <span class="cart-item-mod-badge">${item.modifier === 'حار' ? 'حار 🌶️' : item.modifier}</span></p>
       </div>
 
       <div class="capsule-stepper" style="padding:2px 6px;">
-        <button onclick="decrementItem(${item.id})">-</button>
+        <button type="button" onclick="decrementCartItem(${index})">-</button>
         <span class="capsule-stepper-val">${item.qty}</span>
-        <button onclick="incrementItem(${item.id})">+</button>
+        <button type="button" onclick="incrementCartItem(${index})">+</button>
       </div>
     </div>
   `).join("");
+}
+
+function incrementCartItem(index) {
+  if (state.cart[index]) {
+    state.cart[index].qty += 1;
+    saveCart();
+    renderProducts();
+    updateCartUI();
+  }
+}
+
+function decrementCartItem(index) {
+  if (state.cart[index]) {
+    if (state.cart[index].qty > 1) {
+      state.cart[index].qty -= 1;
+    } else {
+      state.cart.splice(index, 1);
+    }
+    saveCart();
+    renderProducts();
+    updateCartUI();
+  }
 }
 
 // ==========================================================================
@@ -1518,24 +1602,47 @@ function renderSearchResults() {
     return;
   }
 
-  container.innerHTML = results.map(product => `
-    <div class="product-row-card">
-      <div class="product-info-column">
-        <h3 class="product-item-title">${product.product_name}</h3>
-        <p class="product-item-desc">${product.description}</p>
-        <div class="product-price-action-line">
-          <span class="gold-price-pill">${product.price} ج.م</span>
-          <button class="btn-round-add" onclick="addToCart(${product.id}); closeSearchModal();">
-            <span class="material-symbols-outlined" style="font-size:20px;">add</span>
-          </button>
+  container.innerHTML = results.map(product => {
+    const activeMod = (state.selectedModifiers && state.selectedModifiers[product.id]) 
+      || (product.modifiers && product.modifiers.length > 0 ? product.modifiers[0] : "عادي");
+
+    return `
+      <div class="product-row-card" id="search-product-${product.id}">
+        <div class="product-info-column">
+          <h3 class="product-item-title">${product.product_name}</h3>
+          <p class="product-item-desc">${product.description}</p>
+          ${product.modifiers && product.modifiers.length > 0 ? `
+            <div class="product-item-chips" style="margin-bottom:8px;">
+              ${product.modifiers.map(mod => `
+                <button type="button" class="pill-chip ${mod === activeMod ? 'active' : ''}" 
+                        onclick="selectProductModifier(${product.id}, '${mod}')">
+                  ${mod === 'حار' ? 'حار 🌶️' : mod}
+                </button>
+              `).join("")}
+            </div>
+          ` : ""}
+          <div class="product-price-action-line">
+            <span class="gold-price-pill">${product.price} ج.م</span>
+            <button class="btn-round-add" onclick="addToCart(${product.id}); closeSearchModal();">
+              <span class="material-symbols-outlined" style="font-size:20px;">add</span>
+            </button>
+          </div>
+        </div>
+        <div class="product-organic-dish-wrap">
+          <img src="${product.image}" alt="${product.product_name}" class="organic-dish-floating-img">
         </div>
       </div>
-      <div class="product-organic-dish-wrap">
-        <img src="${product.image}" alt="${product.product_name}" class="organic-dish-floating-img">
-      </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
+
+// Window global bindings for onclick handlers
+window.selectProductModifier = selectProductModifier;
+window.addToCart = addToCart;
+window.incrementItem = incrementItem;
+window.decrementItem = decrementItem;
+window.incrementCartItem = incrementCartItem;
+window.decrementCartItem = decrementCartItem;
 
 // Theme
 function toggleTheme() {
