@@ -188,8 +188,24 @@ html, body {
 }
 
 @media (max-width: 600px) {
+  html, body {
+    width: 100%;
+    height: 100%;
+    height: 100svh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
   .app-container {
+    width: 100%;
+    height: 100%;
+    height: 100svh;
+    height: 100dvh;
+    min-height: 0;
+    max-height: 100%;
     padding: 0;
+    margin: 0;
+    overflow: hidden;
   }
 }
 
@@ -210,15 +226,16 @@ html, body {
 
 @media (max-width: 600px) {
   .mobile-frame {
+    width: 100%;
     max-width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    height: 100vh;
+    height: 100%;
+    height: 100svh;
     height: 100dvh;
-    max-height: 100vh;
-    max-height: 100dvh;
+    min-height: 0;
+    max-height: 100%;
     border-radius: 0;
     box-shadow: none;
+    overflow: hidden;
   }
 }
 
@@ -227,9 +244,10 @@ html, body {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 16px 18px calc(120px + env(safe-area-inset-bottom, 0px)) 18px;
+  padding: 16px 18px calc(125px + env(safe-area-inset-bottom, 0px)) 18px;
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
 }
 
 .screen-content::-webkit-scrollbar {
@@ -2106,7 +2124,7 @@ html, body {
 /* Floating Bottom Navigation */
 .bottom-nav-wrapper {
   position: absolute;
-  bottom: max(24px, calc(18px + env(safe-area-inset-bottom, 0px)));
+  bottom: 24px;
   left: 0;
   right: 0;
   display: flex;
@@ -2118,8 +2136,15 @@ html, body {
 
 @media (max-width: 600px) {
   .bottom-nav-wrapper {
-    bottom: max(26px, calc(20px + env(safe-area-inset-bottom, 0px)));
-    padding: 0 12px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    padding: 0 14px max(24px, calc(14px + env(safe-area-inset-bottom, 0px)));
+    z-index: 999;
+    pointer-events: none;
   }
 }
 
